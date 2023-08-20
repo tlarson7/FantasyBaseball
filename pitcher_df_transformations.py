@@ -58,15 +58,22 @@ ytd_df['exp_sum'] = ytd_df.groupby('mlbID')['fantasy_pts'].expanding().sum().res
 ytd_df['exp_count'] = ytd_df.groupby('mlbID')['fantasy_pts'].expanding().count().reset_index(drop=True)
 ytd_df['exp_mean'] = ytd_df.groupby('mlbID')['fantasy_pts'].expanding().mean().reset_index(drop=True)
 ytd_df['exp_median'] = ytd_df.groupby('mlbID')['fantasy_pts'].expanding().median().reset_index(drop=True)
+
+# stats_to_cum = ['SO', 'BB', 'H', 'R', 'ER', 'HR', 'IP']
+# for stat in stats_to_cum:
+#     ytd_df[f'cum_{stat}'] = ytd_df.groupby('mlbID')[stat].expanding().sum().reset_index(drop=True)
+# ytd_df['cum_K/BB'] = ytd_df['cum_SO'] / ytd_df['cum_BB']
+
 # ytd_df['Target_Date'] = ytd_df['Date'] - datetime.timedelta(days=1)
-# ytd_df['Target_Date'] = ytd_df.groupby('mlbID')['Date'].shift(1)
-ytd_df['shft_mean'] = ytd_df.groupby('mlbID')['exp_mean'].shift(1)
-ytd_df['shft_median'] = ytd_df.groupby('mlbID')['exp_median'].shift(1)
+ytd_df['Target_Date'] = ytd_df.groupby('mlbID')['Date'].shift(1)
+# ytd_df['shft_mean'] = ytd_df.groupby('mlbID')['exp_mean'].shift(1)
+# ytd_df['shft_median'] = ytd_df.groupby('mlbID')['exp_median'].shift(1)
 
 pitcher_df.sort_values(by=['mlbID', 'Date'], inplace=True)
 pitcher_df.reset_index(drop=True, inplace=True)
 
-pitcher_df = pd.merge(pitcher_df, ytd_df[['mlbID', 'Date', 'shft_mean', 'shft_median']], how='inner', left_on=['mlbID', 'Date'], right_on=['mlbID', 'Date'])
+pitcher_df = pd.merge(pitcher_df, ytd_df[['mlbID', 'exp_mean', 'exp_median', 'Date', 'Target_Date']],
+                      how='inner', left_on=['mlbID', 'Date'], right_on=['mlbID', 'Target_Date'])
 
 pitcher_df['Differential'] = pitcher_df['fantasy_pts'] - pitcher_df['shft_median']
 pitcher_df.loc[(pitcher_df['Differential'] >= 0), ['Diff_bool']] = 'Pos'
