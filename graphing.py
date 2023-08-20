@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 # from pitcher_plus_team import full_df
-# from pitcher_plus_ytd import full_df as new_df
+from pitcher_plus_ytd import full_df as new_df
 from pitcher_df_transformations import pitcher_df
 
 # fig = px.scatter(data_frame=full_df.loc[full_df['GS'] == 1],x='wOBA', y='fantasy_pts', hover_data=['Name', 'Team', 'Date'])
@@ -34,6 +34,9 @@ def scatter(df, x, y, hover):
 
 
 # scatter(pitcher_df.query('GS == 1'), 'shft_mean', 'fantasy_pts', ['Name', 'Team_Abbrev', 'Date'])
-fig = fig = px.scatter(data_frame=pitcher_df.query('GS == 1'), x='shft_median', y='fantasy_pts',
-                       hover_data = ['Name', 'Team_Abbrev', 'Date', 'Differential'], color='Diff_bool')
-fig.show()
+# fig = fig = px.scatter(data_frame=pitcher_df.query('GS == 1'), x='shft_median', y='fantasy_pts',
+#                        hover_data = ['Name', 'Team_Abbrev', 'Date', 'Differential'], color='Diff_bool')
+# fig.show()
+
+scatter(new_df.query('GS == 1'), 'wOBA', 'fantasy_pts', ['Name', 'Team', 'Date_x'])
+scatter(new_df.query('GS == 1'), 'WAR', 'fantasy_pts', ['Name', 'Team', 'Date_x'])
