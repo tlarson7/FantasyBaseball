@@ -67,7 +67,9 @@ def gen_models(df, x, y, hover):
 
 
 df = new_df.query('GS == 1')
+
 df = df.query('exp_mean == exp_mean')
+# df.query('Date_x.dt.month > 4', inplace=True)
 y = 'fantasy_pts'
 hover = ['Name', 'Team', 'Date_x']
 # xlist = ['wOBA', 'WAR', 'K%', 'BB%', 'ISO', 'BABIP', 'AVG', 'OBP', 'SLG', 'wRC+', 'BsR', 'Off', 'Def']
