@@ -75,10 +75,10 @@ pitcher_df.reset_index(drop=True, inplace=True)
 pitcher_df = pd.merge(pitcher_df, ytd_df[['mlbID', 'exp_mean', 'exp_median', 'Date', 'Target_Date']],
                       how='inner', left_on=['mlbID', 'Date'], right_on=['mlbID', 'Target_Date'])
 
-pitcher_df['Differential'] = pitcher_df['fantasy_pts'] - pitcher_df['shft_median']
-pitcher_df.loc[(pitcher_df['Differential'] >= 0), ['Diff_bool']] = 'Pos'
-pitcher_df.loc[(pitcher_df['Differential'] < 0), ['Diff_bool']] = 'Neg'
+# pitcher_df['Differential'] = pitcher_df['fantasy_pts'] - pitcher_df['shft_median']
+# pitcher_df.loc[(pitcher_df['Differential'] >= 0), ['Diff_bool']] = 'Pos'
+# pitcher_df.loc[(pitcher_df['Differential'] < 0), ['Diff_bool']] = 'Neg'
 
 # pitcher_df.query('GS == 1', inplace=True)
 print(pitcher_df)
-print(pitcher_df['Differential'].sum())
+# print(pitcher_df['Differential'].sum())
